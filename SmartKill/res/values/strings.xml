@@ -9,7 +9,7 @@
     <string name="loginHintText">Podaj login</string>
     <string name="login">login</string>
     <string name="password">password</string>
-    <string name="log_in">LogIn</string>
+    <string name="log_in">Login</string>
     <string name="remember_password">remember password</string>
     <string name="not_empty">This cannot be empty</string>
     <string name="incorrect_login_or_password">Incorrect login or password</string>
