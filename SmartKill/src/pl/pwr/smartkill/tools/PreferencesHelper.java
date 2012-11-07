@@ -1,4 +1,4 @@
-package pl.pwr.smartkill.utils;
+package pl.pwr.smartkill.tools;
 
 import com.googlecode.androidannotations.annotations.sharedpreferences.DefaultString;
 import com.googlecode.androidannotations.annotations.sharedpreferences.SharedPref;

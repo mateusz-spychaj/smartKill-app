@@ -21,7 +21,8 @@ import com.googlecode.androidannotations.api.BackgroundExecutor;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
 import pl.pwr.smartkill.R.id;
 import pl.pwr.smartkill.R.layout;
-import pl.pwr.smartkill.utils.PreferencesHelper_;
+import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.tools.PreferencesHelper_;
 
 public final class LoginActivity_
     extends LoginActivity
@@ -38,13 +39,14 @@ public final class LoginActivity_
 
     private void init_(Bundle savedInstanceState) {
         prefs = new PreferencesHelper_(this);
+        app = ((SKApplication) this.getApplication());
     }
 
     private void afterSetContentView_() {
         remember = ((CheckBox) findViewById(id.login_remember));
+        passwordET = ((EditText) findViewById(id.login_password));
         loginET = ((EditText) findViewById(id.login_login));
         button = ((Button) findViewById(id.login_button));
-        passwordET = ((EditText) findViewById(id.login_password));
         {
             View view = findViewById(id.login_button);
             if (view!= null) {
@@ -95,7 +97,7 @@ public final class LoginActivity_
 
     @Override
     public void loginFinished(final boolean success) {
-        handler_.postDelayed(new Runnable() {
+        handler_.post(new Runnable() {
 
 
             @Override
@@ -108,7 +110,7 @@ public final class LoginActivity_
             }
 
         }
-        , 2000L);
+        );
     }
 
     @Override

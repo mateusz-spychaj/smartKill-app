@@ -1,7 +1,14 @@
 package pl.pwr.smartkill.activities;
 
+import java.util.HashMap;
+
 import pl.pwr.smartkill.R;
-import pl.pwr.smartkill.utils.PreferencesHelper_;
+import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.obj.LoginData;
+import pl.pwr.smartkill.tools.PreferencesHelper_;
+import pl.pwr.smartkill.tools.WebserviceHandler;
+import pl.pwr.smartkill.tools.httpRequests.HttpRequest;
+import pl.pwr.smartkill.tools.httpRequests.PostRequest;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +20,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.App;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
@@ -38,6 +46,9 @@ public class LoginActivity extends SherlockActivity {
 
 	@Pref
 	PreferencesHelper_ prefs;
+	
+	@App
+	SKApplication app;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +92,19 @@ public class LoginActivity extends SherlockActivity {
 	
 	@Background
 	public void logUser(String login,String password){
-		//TODO do web stuff
-		if(login.equals("test")&&password.equals("password")){
+		HashMap<String, String> creditentials = new HashMap<String, String>();
+		creditentials.put(HttpRequest.LOGIN, login);
+		creditentials.put(HttpRequest.PASSWORD, password);
+		LoginData response = new WebserviceHandler<LoginData>().getAndParse(this, new PostRequest(SKApplication.API_URL+"login", creditentials), new LoginData());
+		if(response.getStatus().contains("success")){
+			app.setSessionId(response.getId());
 			loginFinished(true);
 		}else{
 			loginFinished(false);
 		}
 	}
 	
-	@UiThread(delay=2000)
+	@UiThread
 	public void loginFinished(boolean success){
 		if(remember.isChecked()){
 			prefs.edit().lastLogin().put(loginET.getText().toString()).apply();

@@ -3,7 +3,7 @@
 //
 
 
-package pl.pwr.smartkill.utils;
+package pl.pwr.smartkill.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
