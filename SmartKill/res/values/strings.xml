@@ -13,5 +13,6 @@
     <string name="remember_password">remember password</string>
     <string name="not_empty">This cannot be empty</string>
     <string name="incorrect_login_or_password">Incorrect login or password</string>
+    <string name="game">Graj</string>
 
 </resources>
