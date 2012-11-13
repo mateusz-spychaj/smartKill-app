@@ -823,7 +823,8 @@ containing a value of this type.
         public static final int login_login=0x7f040027;
         public static final int login_password=0x7f040028;
         public static final int login_remember=0x7f040029;
-        public static final int menu_settings=0x7f04002c;
+        public static final int mapview=0x7f04002c;
+        public static final int menu_settings=0x7f04002d;
         public static final int normal=0x7f040001;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
@@ -859,8 +860,9 @@ containing a value of this type.
         public static final int abs__screen_simple_overlay_action_mode=0x7f030013;
         public static final int activity_login=0x7f030014;
         public static final int activity_main=0x7f030015;
-        public static final int sherlock_spinner_dropdown_item=0x7f030016;
-        public static final int sherlock_spinner_item=0x7f030017;
+        public static final int activity_maps=0x7f030016;
+        public static final int sherlock_spinner_dropdown_item=0x7f030017;
+        public static final int sherlock_spinner_item=0x7f030018;
     }
     public static final class menu {
         public static final int activity_main=0x7f0b0000;
