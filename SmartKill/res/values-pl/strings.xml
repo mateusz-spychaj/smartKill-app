@@ -1,9 +1,19 @@
 <resources>
 
     <string name="app_name">SmartKill</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_settings">Ustawienia</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="loginText">Login</string>
+    <string name="rememberText">pamiętaj hasło</string>
+    <string name="loginHintText">Podaj login</string>
+    <string name="login">login</string>
+    <string name="password">hasło</string>
+    <string name="log_in">Zaloguj</string>
+    <string name="remember_password">pamiętaj hasło</string>
+    <string name="not_empty">To pole nie może być puste</string>
+    <string name="incorrect_login_or_password">Niepoprawny login lub hasło!</string>
+    <string name="game">Graj</string>
     <string name="loginText">Zaloguj</string>
+    <string name="prompt">Ustalono pozycję, możesz grać w grę!</string>
 
 </resources>

@@ -1,17 +1,25 @@
 package pl.pwr.smartkill.tools;
 
+import java.util.List;
+
 import pl.pwr.smartkill.R;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 import com.google.android.maps.Projection;
 
 /**
@@ -40,34 +48,24 @@ public class FixedMyLocationOverlay extends MyLocationOverlay {
 	@Override
 	protected void drawMyLocation(Canvas canvas, MapView mapView,
 			Location lastFix, GeoPoint myLocation, long when) {
-		if(!bugged) {
-			try {
-				super.drawMyLocation(canvas, mapView, lastFix, myLocation, when);
-			} catch (Exception e) {
-				// we found a buggy phone, draw the location icons ourselves
-				bugged = true;
-			}
+		if(drawable == null) {
+			
+			accuracyPaint = new Paint();
+			accuracyPaint.setAntiAlias(true);
+			accuracyPaint.setStrokeWidth(2.0f);
+			
+			drawable = mapView.getContext().getResources().getDrawable(R.drawable.ic_launcher_icon);
+			width = drawable.getIntrinsicWidth();
+			height = drawable.getIntrinsicHeight();
+			center = new Point();
+			left = new Point();
 		}
-		
-		if(bugged) {
-			if(drawable == null) {
-				
-				accuracyPaint = new Paint();
-				accuracyPaint.setAntiAlias(true);
-				accuracyPaint.setStrokeWidth(2.0f);
-				
-				drawable = mapView.getContext().getResources().getDrawable(R.drawable.ic_launcher);
-				width = drawable.getIntrinsicWidth();
-				height = drawable.getIntrinsicHeight();
-				center = new Point();
-				left = new Point();
-			}
+			
 			
 			Projection projection = mapView.getProjection();
 			double latitude = lastFix.getLatitude();
 			double longitude = lastFix.getLongitude();
-			float accuracy = lastFix.getAccuracy();
-			
+			float accuracy = lastFix.getAccuracy();			
 			float[] result = new float[1];
 			
 			Location.distanceBetween(latitude, longitude, latitude, longitude + 1, result);
@@ -76,6 +74,7 @@ public class FixedMyLocationOverlay extends MyLocationOverlay {
 			GeoPoint leftGeo = new GeoPoint((int)(latitude*1e6), (int)((longitude-accuracy/longitudeLineDistance)*1e6));
 			projection.toPixels(leftGeo, left);
 			projection.toPixels(myLocation, center);
+
 			int radius = center.x - left.x;
 			
 			accuracyPaint.setColor(0xff6666ff);
@@ -88,6 +87,7 @@ public class FixedMyLocationOverlay extends MyLocationOverlay {
 			
 			drawable.setBounds(center.x - width/2, center.y - height/2, center.x + width/2, center.y + height/2);
 			drawable.draw(canvas);
-		}
 	}
 }
+
+
