@@ -14,4 +14,6 @@
     <string name="incorrect_login_or_password">Incorrect login or password</string>
     <string name="game">Play</string>
 	<string name="prompt">Position fixed, You can play in game!</string>
+	<string name="victim_name">Name of victim</string>
+	<string name="victim">Victim</string>
 </resources>

@@ -15,5 +15,6 @@
     <string name="game">Graj</string>
     <string name="loginText">Zaloguj</string>
     <string name="prompt">Ustalono pozycję, możesz grać w grę!</string>
-
+	<string name="victim_name">Nazwa ofiary</string>
+	<string name="victim">Ofiara</string>
 </resources>

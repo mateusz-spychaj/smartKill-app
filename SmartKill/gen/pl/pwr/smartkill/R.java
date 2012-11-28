@@ -785,6 +785,8 @@ containing a value of this type.
         public static final int abs__tab_unselected_pressed_holo=0x7f020054;
         public static final int ic_action_search=0x7f020055;
         public static final int ic_launcher=0x7f020056;
+        public static final int ic_launcher_icon=0x7f020057;
+        public static final int victim=0x7f020058;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040022;
@@ -817,15 +819,16 @@ containing a value of this type.
         public static final int abs__titleDivider=0x7f04001c;
         public static final int abs__up=0x7f04000b;
         public static final int disableHome=0x7f040009;
-        public static final int game_button=0x7f04002b;
         public static final int homeAsUp=0x7f040006;
         public static final int listMode=0x7f040002;
+        public static final int list_games_name=0x7f04002d;
         public static final int login_button=0x7f04002a;
         public static final int login_login=0x7f040027;
         public static final int login_password=0x7f040028;
         public static final int login_remember=0x7f040029;
+        public static final int main_list=0x7f04002b;
         public static final int mapview=0x7f04002c;
-        public static final int menu_settings=0x7f04002d;
+        public static final int menu_settings=0x7f04002e;
         public static final int normal=0x7f040001;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
@@ -861,8 +864,9 @@ containing a value of this type.
         public static final int activity_login=0x7f030014;
         public static final int activity_main=0x7f030015;
         public static final int activity_maps=0x7f030016;
-        public static final int sherlock_spinner_dropdown_item=0x7f030017;
-        public static final int sherlock_spinner_item=0x7f030018;
+        public static final int list_games=0x7f030017;
+        public static final int sherlock_spinner_dropdown_item=0x7f030018;
+        public static final int sherlock_spinner_item=0x7f030019;
     }
     public static final class menu {
         public static final int activity_main=0x7f0b0000;
@@ -899,19 +903,21 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090009;
         public static final int app_name=0x7f09000a;
-        public static final int game=0x7f090017;
-        public static final int hello_world=0x7f09000b;
-        public static final int incorrect_login_or_password=0x7f090016;
-        public static final int log_in=0x7f090013;
-        public static final int login=0x7f090011;
-        public static final int loginHintText=0x7f090010;
-        public static final int loginText=0x7f09000e;
-        public static final int menu_settings=0x7f09000c;
-        public static final int not_empty=0x7f090015;
-        public static final int password=0x7f090012;
-        public static final int rememberText=0x7f09000f;
-        public static final int remember_password=0x7f090014;
-        public static final int title_activity_main=0x7f09000d;
+        public static final int game=0x7f090016;
+        public static final int incorrect_login_or_password=0x7f090015;
+        public static final int log_in=0x7f090012;
+        public static final int login=0x7f090010;
+        public static final int loginHintText=0x7f09000f;
+        public static final int loginText=0x7f09000d;
+        public static final int menu_settings=0x7f09000b;
+        public static final int not_empty=0x7f090014;
+        public static final int password=0x7f090011;
+        public static final int prompt=0x7f090017;
+        public static final int rememberText=0x7f09000e;
+        public static final int remember_password=0x7f090013;
+        public static final int title_activity_main=0x7f09000c;
+        public static final int victim=0x7f090019;
+        public static final int victim_name=0x7f090018;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0058;

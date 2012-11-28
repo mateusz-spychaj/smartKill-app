@@ -43,10 +43,10 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        remember = ((CheckBox) findViewById(id.login_remember));
-        passwordET = ((EditText) findViewById(id.login_password));
-        loginET = ((EditText) findViewById(id.login_login));
         button = ((Button) findViewById(id.login_button));
+        loginET = ((EditText) findViewById(id.login_login));
+        passwordET = ((EditText) findViewById(id.login_password));
+        remember = ((CheckBox) findViewById(id.login_remember));
         {
             View view = findViewById(id.login_button);
             if (view!= null) {

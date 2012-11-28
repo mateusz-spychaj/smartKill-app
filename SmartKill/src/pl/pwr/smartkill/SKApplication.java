@@ -5,6 +5,7 @@ import pl.pwr.smartkill.db.UserHelper;
 import com.googlecode.androidannotations.annotations.EApplication;
 
 import android.app.Application;
+import android.util.Log;
 
 @EApplication 
 public class SKApplication extends Application{
@@ -48,6 +49,7 @@ public class SKApplication extends Application{
 
 
 	public void setSessionId(String sessionId) {
+		Log.e("session id", sessionId);
 		this.sessionId = sessionId;
 	}
 	

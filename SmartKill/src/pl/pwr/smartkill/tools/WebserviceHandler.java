@@ -40,6 +40,7 @@ public class WebserviceHandler<T extends Object> {
 		String readed = Misc.convertStreamToString(reader);
 		Log.e("got response",readed);
 		if(readed.contains("error:")){
+			Log.e("wyzepsuło się", readed);
 			//TODO handling error if got response with error
 		}else{
 			try {

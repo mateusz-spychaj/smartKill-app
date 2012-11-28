@@ -32,8 +32,6 @@ import com.google.android.maps.Projection;
  */
 public class FixedMyLocationOverlay extends MyLocationOverlay {
 	
-	private boolean bugged = false;
-	
 	private Drawable drawable;
 	private Paint accuracyPaint;
 	private Point center;
