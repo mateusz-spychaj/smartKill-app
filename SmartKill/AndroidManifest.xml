@@ -29,6 +29,11 @@
         
         <activity android:name=".activities.MainActivity_"/>
         <activity android:name=".activities.MapsActivity"/>
+        <service android:name=".LocationService_" >
+            <intent-filter>
+                <action android:name="com.appnroll.owller.LocationService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

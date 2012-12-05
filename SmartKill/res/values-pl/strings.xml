@@ -3,7 +3,6 @@
     <string name="app_name">SmartKill</string>
     <string name="menu_settings">Ustawienia</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="loginText">Login</string>
     <string name="rememberText">pamiętaj hasło</string>
     <string name="loginHintText">Podaj login</string>
     <string name="login">login</string>

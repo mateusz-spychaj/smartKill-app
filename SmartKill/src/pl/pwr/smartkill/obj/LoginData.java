@@ -1,6 +1,5 @@
 package pl.pwr.smartkill.obj;
 
-import java.util.List;
 
 public class LoginData{
    	private String id;
