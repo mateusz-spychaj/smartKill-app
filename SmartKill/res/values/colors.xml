@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <color name="pressed_spidersweb">#CC8a105f</color>
+    <color name="white">#ffffff</color>
+    <color name="pressed_list">#ffffff</color>
+    <color name="grey_spidersweb">#e7e7e7</color>
+    <color name="dark_slate_gray">#2F4F4F</color>
+    <color name="black">#000000</color>
+   	<color name="gray_2">#AFAFAF</color>
+	<color name="gray_1">#C0C0C0</color>
+</resources>

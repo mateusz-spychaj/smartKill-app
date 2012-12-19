@@ -16,7 +16,8 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
-
+import com.googlecode.androidannotations.annotations.EActivity;
+@EActivity 
 public class MapsActivity extends MapActivity {
 	private MapView mapView;
 	private MapController mc;

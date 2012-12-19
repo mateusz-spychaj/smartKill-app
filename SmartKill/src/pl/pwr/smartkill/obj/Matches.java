@@ -1,17 +1,16 @@
 
 package pl.pwr.smartkill.obj;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class Matches{
-   	private List<HashMap<String, String>> matches;
+   	private List<Match> matches;
    	private String status;
 
- 	public List<HashMap<String, String>> getMatches(){
+ 	public List<Match> getMatches(){
 		return this.matches;
 	}
-	public void setMatches(List<HashMap<String, String>> matches){
+	public void setMatches(List<Match> matches){
 		this.matches = matches;
 	}
  	public String getStatus(){

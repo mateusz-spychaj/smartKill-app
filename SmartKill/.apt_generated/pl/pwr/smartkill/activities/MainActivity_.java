@@ -8,30 +8,23 @@ package pl.pwr.smartkill.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ListView;
 import com.googlecode.androidannotations.api.BackgroundExecutor;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
-import pl.pwr.smartkill.R.id;
-import pl.pwr.smartkill.R.layout;
 import pl.pwr.smartkill.SKApplication;
-import pl.pwr.smartkill.obj.Matches;
 
 public final class MainActivity_
     extends MainActivity
 {
 
-    private Handler handler_ = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         init_(savedInstanceState);
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_main);
     }
 
     private void init_(Bundle savedInstanceState) {
@@ -39,8 +32,6 @@ public final class MainActivity_
     }
 
     private void afterSetContentView_() {
-        list = ((ListView) findViewById(id.main_list));
-        prepare();
     }
 
     @Override
@@ -74,32 +65,14 @@ public final class MainActivity_
     }
 
     @Override
-    public void updateList(final Matches m) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    MainActivity_.super.updateList(m);
-                } catch (RuntimeException e) {
-                    Log.e("MainActivity_", "A runtime exception was thrown while executing code in a runnable", e);
-                }
-            }
-
-        }
-        );
-    }
-
-    @Override
-    public void getMatches() {
+    public void logout() {
         BackgroundExecutor.execute(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    MainActivity_.super.getMatches();
+                    MainActivity_.super.logout();
                 } catch (RuntimeException e) {
                     Log.e("MainActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }

@@ -16,4 +16,8 @@
 	<string name="prompt">Position fixed, You can play in game!</string>
 	<string name="victim_name">Name of victim</string>
 	<string name="victim">Victim</string>
+		<string name="pull_to_refresh_pull_label">Pociągnij aby odświeżyć&#8230;</string>
+	<string name="pull_to_refresh_release_label">Puść aby odświeżyć&#8230;</string>
+	<string name="pull_to_refresh_refreshing_label">Ładuję&#8230;</string>
+	<string name="pull_to_refresh_tap_label">Dotknij aby odświeżyć&#8230;</string>
 </resources>

@@ -1,6 +1,7 @@
 package pl.pwr.smartkill.adapters;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.obj.Match;
@@ -14,17 +15,17 @@ import android.widget.TextView;
 
 public class GameListAdapter extends BaseAdapter {
 
-	private ArrayList<Match> items = new ArrayList<Match>();
+	private List<Match> items = new ArrayList<Match>();
 	private static LayoutInflater inflater=null;
 
 	class ViewHolder{
-//		ImageView status;
-//		ImageView avatar;
 		TextView name;
-//		CheckBox checkbox;
+		TextView max;
+		TextView free;
+		TextView password;
 	}
 
-	public GameListAdapter(Activity a, ArrayList<Match> itms) {
+	public GameListAdapter(Activity a, List<Match> itms) {
 		items=itms;
 		inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -46,16 +47,17 @@ public class GameListAdapter extends BaseAdapter {
 		if(convertView==null){
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_games, null);
-			holder.name = (TextView) convertView.findViewById(R.id.list_games_name);
-//			holder.status = (ImageView) convertView.findViewById(R.id.list_who_status);
-//			holder.avatar = (ImageView) convertView.findViewById(R.id.list_who_avatar);
-//			holder.checkbox = (CheckBox) convertView.findViewById(R.id.list_who_selected);
+			holder.name = (TextView) convertView.findViewById(R.id.game_title);
+			holder.max = (TextView) convertView.findViewById(R.id.game_max_players);
+			holder.free = (TextView) convertView.findViewById(R.id.game_free_slots);
+			holder.password = (TextView) convertView.findViewById(R.id.game_password);
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		final Match item = items.get(position);
 		holder.name.setText(item.getName());
+		holder.max.setText(item.getMax_players()+"");
 		//TODO
 
 		return convertView;

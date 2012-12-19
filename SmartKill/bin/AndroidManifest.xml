@@ -28,7 +28,7 @@
         </activity>
         
         <activity android:name=".activities.MainActivity_"/>
-        <activity android:name=".activities.MapsActivity"/>
+        <activity android:name=".activities.MapsActivity_"/>
         <service android:name=".LocationService_" >
             <intent-filter>
                 <action android:name="com.appnroll.owller.LocationService" />
