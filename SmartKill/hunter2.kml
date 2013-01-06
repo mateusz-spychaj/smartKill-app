@@ -1,0 +1,267 @@
+<?xml version="1.0" standalone="yes"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+  <Document>
+    <name><![CDATA[hunter2]]></name>
+    <visibility>1</visibility>
+    <open>1</open>
+    <Snippet><![CDATA[created using <A href="http://www.gpsvisualizer.com/?ref=ge&time=1357506408">GPS Visualizer</A>]]></Snippet>
+    <Style id="gv_waypoint_normal">
+      <IconStyle>
+        <color>FFFFFFFF</color>
+        <scale>1</scale>
+        <Icon>
+          <href>http://maps.google.ca/mapfiles/kml/pal4/icon56.png</href>
+        </Icon>
+        <hotSpot x="0.5" xunits="fraction" y="0.5" yunits="fraction" />
+      </IconStyle>
+      <LabelStyle>
+        <color>FFFFFFFF</color>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="gv_waypoint_highlight">
+      <IconStyle>
+        <color>FFFFFFFF</color>
+        <scale>1.2</scale>
+        <Icon>
+          <href>http://maps.google.ca/mapfiles/kml/pal4/icon56.png</href>
+        </Icon>
+        <hotSpot x="0.5" xunits="fraction" y="0.5" yunits="fraction" />
+      </IconStyle>
+      <LabelStyle>
+        <color>FFFFFFFF</color>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="gv_waypoint">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#gv_waypoint_normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#gv_waypoint_highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder id="Waypoints">
+      <name>Waypoints</name>
+      <visibility>1</visibility>
+      <Placemark>
+        <name>Wyrusz na wsch&#243;d przez Plac Dominikański w kierunku Klemensa Janickiego</name>
+        <description><![CDATA[Wyrusz na <b>wsch&#243;d</b> przez <b>Plac Dominikański</b> w kierunku <b>Klemensa Janickiego</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.03999,51.10902,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lekko w prawo w Aleja Juliusza Słowackiego</name>
+        <description><![CDATA[Lekko w prawo w <b>Aleja Juliusza Słowackiego</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.04061,51.10906,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Skręć w lewo, pozostając na Aleja Juliusza Słowackiego</name>
+        <description><![CDATA[Skręć w lewo, pozostając na <b>Aleja Juliusza Słowackiego</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.04365,51.10867,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Skręć w lewo na rozwidleniu</name>
+        <description><![CDATA[Skręć w lewo na rozwidleniu]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.0437,51.10869,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Kontynuuj wzdłuż Plac Powstańc&#243;w Warszawy</name>
+        <description><![CDATA[Kontynuuj wzdłuż <b>Plac Powstańc&#243;w Warszawy</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.04738,51.10922,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Skręć w prawo, pozostając na Plac Powstańc&#243;w Warszawy</name>
+        <description><![CDATA[Skręć w prawo, pozostając na <b>Plac Powstańc&#243;w Warszawy</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.04803,51.11021,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Skręć w prawo, pozostając na Plac Powstańc&#243;w Warszawy</name>
+        <description><![CDATA[Skręć w prawo, pozostając na <b>Plac Powstańc&#243;w Warszawy</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.05014,51.10925,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Skręć w lewo, pozostając na Plac Powstańc&#243;w Warszawy</name>
+        <description><![CDATA[Skręć w lewo, pozostając na <b>Plac Powstańc&#243;w Warszawy</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.05029,51.10897,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Kontynuuj wzdłuż most Grunwaldzki</name>
+        <description><![CDATA[Kontynuuj wzdłuż <b>most Grunwaldzki</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.05141,51.10924,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lekko w prawo w Plac Grunwaldzki</name>
+        <description><![CDATA[Lekko w prawo w <b>Plac Grunwaldzki</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.05353,51.10975,0</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Wjedź na rondo Ronalda Reagana</name>
+        <description><![CDATA[Wjedź na <b>rondo Ronalda Reagana</b>]]></description>
+        <styleUrl>#gv_waypoint</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>http://maps.gstatic.com/mapfiles/kml/paddle/pause.png</href>
+            </Icon>
+            <hotSpot x="0.5" xunits="fraction" y="0" yunits="fraction" />
+          </IconStyle>
+        </Style>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>17.05941,51.11108,0</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder id="Tracks">
+      <name>Tracks</name>
+      <visibility>1</visibility>
+      <open>0</open>
+      <Placemark>
+        <name><![CDATA[Route]]></name>
+        <Snippet></Snippet>
+        <description><![CDATA[&nbsp;]]></description>
+        <Style>
+          <LineStyle>
+            <color>FF0000E6</color>
+            <width>4</width>
+          </LineStyle>
+        </Style>
+        <MultiGeometry>
+          <LineString>
+            <tessellate>1</tessellate>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>17.03999,51.10902,0 17.04061,51.10906,0 17.04069,51.10903,0 17.04139,51.10908,0 17.04348,51.10876,0 17.04365,51.10867,0 17.0437,51.10869,0 17.04392,51.10874,0 17.04687,51.10888,0 17.04707,51.10898,0 17.04738,51.10922,0 17.04803,51.11021,0 17.049,51.10982,0 17.04962,51.10946,0 17.04995,51.10922,0 17.05014,51.10925,0 17.05029,51.10897,0 17.05107,51.10919,0 17.05141,51.10924,0 17.05353,51.10975,0 17.05512,51.11,0 17.05621,51.11027,0 17.05867,51.11096,0 17.05941,51.11108,0 17.0596,51.11105,0 17.06008,51.11108,0 17.06065,51.11123,0 17.06112,51.11147,0 17.06127,51.11167,0 </coordinates>
+          </LineString>
+        </MultiGeometry>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

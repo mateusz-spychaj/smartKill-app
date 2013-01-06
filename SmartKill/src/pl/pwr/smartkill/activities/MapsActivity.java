@@ -7,15 +7,22 @@ import java.util.List;
 
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.obj.LoginData;
 import pl.pwr.smartkill.obj.Match;
 import pl.pwr.smartkill.obj.Matches;
 import pl.pwr.smartkill.obj.Position;
 import pl.pwr.smartkill.obj.Positions;
 import pl.pwr.smartkill.tools.FixedMyLocationOverlay;
+import pl.pwr.smartkill.tools.MyLocationListener;
 import pl.pwr.smartkill.tools.PlayersItemizedOverlay;
 import pl.pwr.smartkill.tools.WebserviceHandler;
+import pl.pwr.smartkill.tools.httpRequests.HttpRequest;
 import pl.pwr.smartkill.tools.httpRequests.PostRequest;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -42,6 +49,9 @@ public class MapsActivity extends MapActivity {
 	private MapView mapView;
 	private MapController mc;
 	private MyLocationOverlay myLocationOverlay;
+	public LocationManager locManager;
+	public LocationListener locListener;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -59,20 +69,26 @@ public class MapsActivity extends MapActivity {
 		mapView.postInvalidate();
 		mc = mapView.getController();
 		mc.setZoom(15);
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(R.drawable.victim);
-		GeoPoint point = new GeoPoint(51113869,17026062);
-		PlayersItemizedOverlay itemizedoverlay = new PlayersItemizedOverlay(drawable, this, point);
-		mapOverlays.add(itemizedoverlay);
+		
 		// call convenience method that zooms map on our location
 		//zoomToMyLocation();
+		locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		locListener = new MyLocationListener(this);
+		locManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 1000, 2, locListener);
+		
 	    myLocationOverlay.runOnFirstFix(new Runnable() {
             public void run() {
-                mc.setZoom(20);
                 mc.animateTo(myLocationOverlay.getMyLocation());
             }
+
         });
+	    
     }
+    
+    private void updatePositions(GeoPoint myLocation) {
+		
+		
+	}
     @AfterViews
     public void prepare(){
     	getData();
@@ -86,17 +102,30 @@ public class MapsActivity extends MapActivity {
 		params.put("user", match.getCreated_by()+"");
 		params.put("lat", match.getLat());
 		params.put("lng", match.getLng());
+		Log.e("params", match.getLat()+"");
 		Positions m = new WebserviceHandler<Positions>().getAndParse(this, new PostRequest(SKApplication.API_URL+"position", params), new Positions());
 		updateData(m);
 	}
 	
 	@UiThread
 	public void updateData(Positions m){
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		Drawable drawable = getResources().getDrawable(R.drawable.victim);
 		for (Position p : m.getPositions()){
-			Log.e("type", p.getType());
+			if (p.getLat() != null){
+			GeoPoint point = new GeoPoint((int)(Float.parseFloat(p.getLat())*1000000),(int)(Float.parseFloat(p.getLng())*1000000));
+			PlayersItemizedOverlay itemizedoverlay = new PlayersItemizedOverlay(drawable, this, point, p.getType());
+			mapOverlays.add(itemizedoverlay);
+			
+			Log.e("type", "Position: " + p.getType() );
+			}
 		}
 		//TODO
 	}
+	
+   public static void updateLocation(Location location){
+	   
+   }
  
     @Override
 	protected void onPause(){

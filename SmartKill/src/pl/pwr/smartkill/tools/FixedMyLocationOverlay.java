@@ -1,6 +1,7 @@
 package pl.pwr.smartkill.tools;
 
 import pl.pwr.smartkill.R;
+import pl.pwr.smartkill.activities.MapsActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -78,6 +79,7 @@ public class FixedMyLocationOverlay extends MyLocationOverlay {
 			drawable.setBounds(center.x - width/2, center.y - height/2, center.x + width/2, center.y + height/2);
 			drawable.draw(canvas);
 	}
+
 }
 
 

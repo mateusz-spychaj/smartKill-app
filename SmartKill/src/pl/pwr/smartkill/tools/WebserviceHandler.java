@@ -27,7 +27,7 @@ public class WebserviceHandler<T extends Object> {
 
 	@SuppressWarnings("unchecked")
 	public T getAndParse(Context ctx,HttpRequest request, T model) {
-		Log.i(TAG, "ws invoked for url " + request.getUrl());
+		Log.i(TAG, "ws invoked for url " + request.getUrl() );
 
 		T ret = model;
 

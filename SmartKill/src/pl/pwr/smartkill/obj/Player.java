@@ -14,6 +14,7 @@ public class Player {
 		this.setName(name);
 		setAlive(true);
 	}
+	
 
 	public String getName() {
 		return name;
@@ -38,7 +39,7 @@ public class Player {
 	public void setLocation(GeoPoint location) {
 		this.location = location;
 	}
-
+	
 	public boolean isAlive() {
 		return alive;
 	}
