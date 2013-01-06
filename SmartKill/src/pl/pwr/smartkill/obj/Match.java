@@ -1,27 +1,36 @@
 
 package pl.pwr.smartkill.obj;
 
+import java.io.Serializable;
 
-public class Match{
-   	private String created_at;
-   	private Number created_by;
-   	private Number density;
-   	private String descr;
-   	private String due_date;
-   	private Number id;
-   	private String lat;
-   	private Number length;
-   	private String lng;
-   	private Number max_players;
-   	private String name;
-   	private boolean pkg_shield;
-   	private boolean pkg_snipe;
-   	private boolean pkg_switch;
-   	private boolean pkg_time;
-   	private Number size;
-   	private String status;
 
- 	public String getCreated_at(){
+public class Match implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private Number id;
+	private String status;
+	private String name;
+	private String password;
+	private String lat;
+	private String lng;
+	private Number size;
+	private Number length;
+	private String due_date;
+	private Number max_players;
+	private String created_at;
+	private Number created_by;
+	private Number density;
+	private boolean pkg_time;
+	private boolean pkg_shield;
+	private boolean pkg_snipe;
+	private boolean pkg_switch;
+
+ 	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getCreated_at(){
 		return this.created_at;
 	}
 	public void setCreated_at(String created_at){
@@ -38,12 +47,6 @@ public class Match{
 	}
 	public void setDensity(Number density){
 		this.density = density;
-	}
- 	public String getDescr(){
-		return this.descr;
-	}
-	public void setDescr(String descr){
-		this.descr = descr;
 	}
  	public String getDue_date(){
 		return this.due_date;

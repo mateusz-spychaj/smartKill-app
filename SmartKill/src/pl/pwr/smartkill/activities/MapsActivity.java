@@ -2,13 +2,22 @@ package pl.pwr.smartkill.activities;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import pl.pwr.smartkill.R;
+import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.obj.Match;
+import pl.pwr.smartkill.obj.Matches;
+import pl.pwr.smartkill.obj.Position;
+import pl.pwr.smartkill.obj.Positions;
 import pl.pwr.smartkill.tools.FixedMyLocationOverlay;
 import pl.pwr.smartkill.tools.PlayersItemizedOverlay;
+import pl.pwr.smartkill.tools.WebserviceHandler;
+import pl.pwr.smartkill.tools.httpRequests.PostRequest;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -16,9 +25,20 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.App;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.UiThread;
 @EActivity 
 public class MapsActivity extends MapActivity {
+	@Extra
+	Match match;
+	
+	@App
+	SKApplication app;
+	
 	private MapView mapView;
 	private MapController mc;
 	private MyLocationOverlay myLocationOverlay;
@@ -53,6 +73,30 @@ public class MapsActivity extends MapActivity {
             }
         });
     }
+    @AfterViews
+    public void prepare(){
+    	getData();
+    }
+    
+    @Background
+	public void getData(){
+		HashMap<String , String> params = new HashMap<String, String>();
+		params.put("id", app.getSessionId());
+		params.put("match", match.getId()+"");
+		params.put("user", match.getCreated_by()+"");
+		params.put("lat", match.getLat());
+		params.put("lng", match.getLng());
+		Positions m = new WebserviceHandler<Positions>().getAndParse(this, new PostRequest(SKApplication.API_URL+"position", params), new Positions());
+		updateData(m);
+	}
+	
+	@UiThread
+	public void updateData(Positions m){
+		for (Position p : m.getPositions()){
+			Log.e("type", p.getType());
+		}
+		//TODO
+	}
  
     @Override
 	protected void onPause(){

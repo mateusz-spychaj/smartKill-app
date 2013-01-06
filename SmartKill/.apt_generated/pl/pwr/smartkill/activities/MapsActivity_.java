@@ -5,18 +5,26 @@
 
 package pl.pwr.smartkill.activities;
 
+import java.io.Serializable;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import com.googlecode.androidannotations.api.BackgroundExecutor;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
+import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.obj.Match;
+import pl.pwr.smartkill.obj.Positions;
 
 public final class MapsActivity_
     extends MapsActivity
 {
 
+    private Handler handler_ = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,9 +33,12 @@ public final class MapsActivity_
     }
 
     private void init_(Bundle savedInstanceState) {
+        injectExtras_();
+        app = ((SKApplication) this.getApplication());
     }
 
     private void afterSetContentView_() {
+        prepare();
     }
 
     @Override
@@ -60,6 +71,67 @@ public final class MapsActivity_
         return new MapsActivity_.IntentBuilder_(context);
     }
 
+    @SuppressWarnings("unchecked")
+    private<T >T cast_(Object object) {
+        return ((T) object);
+    }
+
+    private void injectExtras_() {
+        Intent intent_ = getIntent();
+        Bundle extras_ = intent_.getExtras();
+        if (extras_!= null) {
+            if (extras_.containsKey("match")) {
+                try {
+                    match = cast_(extras_.get("match"));
+                } catch (ClassCastException e) {
+                    Log.e("MapsActivity_", "Could not cast extra to expected type, the field is left to its default value", e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setIntent(Intent newIntent) {
+        super.setIntent(newIntent);
+        injectExtras_();
+    }
+
+    @Override
+    public void updateData(final Positions m) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.updateData(m);
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void getData() {
+        BackgroundExecutor.execute(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.getData();
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
     public static class IntentBuilder_ {
 
         private Context context_;
@@ -81,6 +153,11 @@ public final class MapsActivity_
 
         public void start() {
             context_.startActivity(intent_);
+        }
+
+        public MapsActivity_.IntentBuilder_ match(Match match) {
+            intent_.putExtra("match", ((Serializable) match));
+            return this;
         }
 
     }
