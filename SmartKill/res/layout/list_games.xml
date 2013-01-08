@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:text="free"
+            android:visibility="gone"
             android:textColor="#ff99cc00" />
 
         <TextView
@@ -35,7 +36,7 @@
             android:id="@+id/game_max_players"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:text="no of players"
             android:textColor="#ffff4444" />
     </FrameLayout>

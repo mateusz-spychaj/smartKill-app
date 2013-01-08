@@ -71,12 +71,11 @@ public class ListFragment extends Fragment implements OnItemClickListener{
 
     @Override
 	public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-    	Log.e(items.get(position).getName(),items.get(position).getPassword());
-    	if(items.get(position).getPassword().equals("brak")){
+//    	if(items.get(position).getPassword().equals("brak")){
     		MapsActivity_.intent(getActivity()).match(items.get(position)).start();
-    	}else{
-    		Toast.makeText(getActivity(), "Jeszcze nie można dołączać do meczy z hasłem.", Toast.LENGTH_LONG).show();
-    	}
+//    	}else{
+//    		Toast.makeText(getActivity(), "Jeszcze nie można dołączać do meczy z hasłem.", Toast.LENGTH_LONG).show();
+//    	}
 	}
     
 }

@@ -5,19 +5,16 @@ import java.util.HashMap;
 
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.SKApplication;
-import pl.pwr.smartkill.fragments.EmptyListFragment_;
 import pl.pwr.smartkill.fragments.ListFragment_;
 import pl.pwr.smartkill.tools.WebserviceHandler;
 import pl.pwr.smartkill.tools.httpRequests.PostRequest;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -54,16 +51,16 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		ourInstance=this;
 
-		ActionBar.Tab tab1 = getSupportActionBar().newTab().setText("Wszystkie");
+//		ActionBar.Tab tab1 = getSupportActionBar().newTab().setText("Wszystkie");
 		ActionBar.Tab tab2 = getSupportActionBar().newTab().setText("Zapisany");
-		ActionBar.Tab tab3 = getSupportActionBar().newTab().setText("Profil");
+//		ActionBar.Tab tab3 = getSupportActionBar().newTab().setText("Profil");
 		
 		mViewPager = (ViewPager)findViewById(R.id.pager);
 		mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
-		mTabsAdapter.addTab(tab1, EmptyListFragment_.class);
+//		mTabsAdapter.addTab(tab1, EmptyListFragment_.class);
 		mTabsAdapter.addTab(tab2, ListFragment_.class);
-		mTabsAdapter.addTab(tab3, EmptyListFragment_.class);
-		mViewPager.setCurrentItem(1);
+//		mTabsAdapter.addTab(tab3, EmptyListFragment_.class);
+		mViewPager.setCurrentItem(0);
 
 	}
 

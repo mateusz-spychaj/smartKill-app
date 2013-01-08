@@ -7,7 +7,6 @@ import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.obj.Match;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,10 +57,10 @@ public class GameListAdapter extends BaseAdapter {
 		}
 		final Match item = items.get(position);
 		holder.name.setText(item.getName());
-		if(item.getPassword().equals("brak")){
+//		if(item.getPassword().equals("brak")){
 			holder.password.setVisibility(View.INVISIBLE);
-		}
-		holder.max.setText(item.getMax_players()+"");
+//		}
+		holder.max.setText("max players: "+item.getMax_players());
 		//TODO
 
 		return convertView;
