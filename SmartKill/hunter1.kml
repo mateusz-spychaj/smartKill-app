@@ -223,28 +223,5 @@
         </Point>
       </Placemark>
     </Folder>
-    <Folder id="Tracks">
-      <name>Tracks</name>
-      <visibility>1</visibility>
-      <open>0</open>
-      <Placemark>
-        <name><![CDATA[Route]]></name>
-        <Snippet></Snippet>
-        <description><![CDATA[&nbsp;]]></description>
-        <Style>
-          <LineStyle>
-            <color>FF0000E6</color>
-            <width>4</width>
-          </LineStyle>
-        </Style>
-        <MultiGeometry>
-          <LineString>
-            <tessellate>1</tessellate>
-            <altitudeMode>clampToGround</altitudeMode>
-            <coordinates>17.06127,51.11167,0 17.06112,51.11147,0 17.06065,51.11123,0 17.06008,51.11108,0 17.05978,51.11105,0 17.05941,51.11108,0 17.05867,51.11096,0 17.05621,51.11027,0 17.05512,51.11,0 17.05353,51.10975,0 17.05141,51.10924,0 17.05107,51.10919,0 17.05014,51.10892,0 17.04998,51.10892,0 17.04916,51.10875,0 17.04759,51.10837,0 17.0444,51.10734,0 17.04411,51.10727,0 17.04372,51.10724,0 17.04187,51.10754,0 17.04131,51.10762,0 17.03958,51.1079,0 17.03909,51.10799,0 17.03891,51.10818,0 17.03891,51.10838,0 17.03875,51.10875,0 17.03875,51.10887,0 17.03893,51.10902,0 17.03915,51.10906,0 17.0396,51.109,0 17.03999,51.10902,0 </coordinates>
-          </LineString>
-        </MultiGeometry>
-      </Placemark>
-    </Folder>
   </Document>
 </kml>
