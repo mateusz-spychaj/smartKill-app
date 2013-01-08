@@ -16,6 +16,7 @@ import pl.pwr.smartkill.obj.Positions;
 import pl.pwr.smartkill.tools.CircleOverlay;
 import pl.pwr.smartkill.tools.DistanceCalculator;
 import pl.pwr.smartkill.tools.FixedMyLocationOverlay;
+import pl.pwr.smartkill.LocationService;
 import pl.pwr.smartkill.tools.MyLocationListener;
 import pl.pwr.smartkill.tools.PlayersItemizedOverlay;
 import pl.pwr.smartkill.tools.WebserviceHandler;
@@ -54,7 +55,7 @@ public class MapsActivity extends MapActivity {
 	private MapController mc;
 	private MyLocationOverlay myLocationOverlay;
 	public LocationManager locManager;
-	public LocationListener locListener;
+	public LocationService locService;
 	public static final double PRECISION = 1000000;
 
 	/** Called when the activity is first created. */
@@ -76,10 +77,9 @@ public class MapsActivity extends MapActivity {
 
 		// call convenience method that zooms map on our location
 		// zoomToMyLocation();
-		locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locListener = new MyLocationListener(this);
-		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000,
-				2, locListener);
+		//locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locService = new LocationService(this);
+		//locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 2, locListener);
 
 		// mapView.getOverlays().add(new CircleOverlay(this,
 		// StrToDbl(match.getLat())/PRECISION,
@@ -88,6 +88,7 @@ public class MapsActivity extends MapActivity {
 		myLocationOverlay.runOnFirstFix(new Runnable() {
 			public void run() {
 				getData();
+				start();
 				mc.animateTo(myLocationOverlay.getMyLocation());
 			}
 
@@ -117,8 +118,6 @@ public class MapsActivity extends MapActivity {
 
 	@AfterViews
 	public void prepare() {
-		getData();
-		start();
 	}
 
 	@Background
@@ -139,8 +138,7 @@ public class MapsActivity extends MapActivity {
 		params.put("match", match.getId() + "");
 		params.put("lat", lat);
 		params.put("lng", lng);
-		Log.e("params", ((float) myLocationOverlay.getMyLocation()
-				.getLongitudeE6()) / 1000000 + "");
+		//Log.e("params", ((float) myLocationOverlay.getMyLocation().getLongitudeE6()) / 1000000 + "");
 		Positions m = new WebserviceHandler<Positions>().getAndParse(this,
 				new PostRequest(SKApplication.API_URL + "position", params),
 				new Positions());
@@ -153,7 +151,7 @@ public class MapsActivity extends MapActivity {
 		Drawable victim = getResources().getDrawable(R.drawable.victim);
 		Drawable hunter = getResources().getDrawable(
 				R.drawable.ic_launcher_icon);
-		myLocationOverlay = (MyLocationOverlay) mapOverlays.get(0);
+		myLocationOverlay = (FixedMyLocationOverlay) mapOverlays.get(0);
 		mapOverlays.clear();
 		mapOverlays.add(myLocationOverlay);
 		DistanceCalculator dc = new DistanceCalculator();
@@ -168,7 +166,7 @@ public class MapsActivity extends MapActivity {
 				if (p.getType().equals("hunter")) {
 					itemizedoverlay = new PlayersItemizedOverlay(hunter, this,
 							point, p.getType());// TODO - p.getType() - powinno
-												// byc getName()
+					// byc getName()
 					if (myType.equals("prey")) {
 						if (dc.CalculationByDistance(point,
 								myLocationOverlay.getMyLocation()) < 5) {

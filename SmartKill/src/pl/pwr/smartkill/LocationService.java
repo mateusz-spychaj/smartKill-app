@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import pl.pwr.smartkill.activities.MapsActivity;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +24,7 @@ public class LocationService extends Service{
 	
 	private static final String TAG = "Owller Location";
 	private LocationManager mLocationManager = null;
+	private MapsActivity map;
 	private static final int LOCATION_INTERVAL = 1000;
 	private static final float LOCATION_DISTANCE = 10f;
 
@@ -30,6 +33,11 @@ public class LocationService extends Service{
 	public static final int MODE_ECONOMICAL=2;
 	public static final int MODE_CUSTOM=3;
 	public static final int MODE_NONE=4;
+	
+	public LocationService(MapsActivity map){
+		super();
+		this.map = map;
+	}
 	
 	private class LocationListener implements android.location.LocationListener{
 		Location mLastLocation;
@@ -44,6 +52,7 @@ public class LocationService extends Service{
 			Log.e(TAG, "onLocationChanged: " + location);
 	       (new ReverseGeocodingTask(LocationService.this)).execute(new Location[] {location});
 			mLastLocation.set(location);
+			map.getData();
 			
 		}
 		@Override

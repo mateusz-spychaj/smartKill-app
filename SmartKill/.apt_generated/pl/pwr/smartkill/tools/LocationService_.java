@@ -3,8 +3,9 @@
 //
 
 
-package pl.pwr.smartkill;
+package pl.pwr.smartkill.tools;
 
+import pl.pwr.smartkill.LocationService;
 import pl.pwr.smartkill.activities.MapsActivity;
 
 
