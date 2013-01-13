@@ -12,7 +12,7 @@ public class Position{
    	private Number points_prey;
    	private String type;
    	private String updated_at;
-   	private Number user;
+   	private int user;
 
  	public boolean getDisqualification(){
 		return this.disqualification;
@@ -68,10 +68,10 @@ public class Position{
 	public void setUpdated_at(String updated_at){
 		this.updated_at = updated_at;
 	}
- 	public Number getUser(){
+ 	public int getUser(){
 		return this.user;
 	}
-	public void setUser(Number user){
+	public void setUser(int user){
 		this.user = user;
 	}
 }

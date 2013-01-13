@@ -53,6 +53,7 @@ public class PostRequest implements HttpRequest {
 		} catch (UnsupportedEncodingException e1) {
 		}
          try {
+        	if (postRequest == null) Log.e("client", "nullowo");
  			HttpResponse getResponse = client.execute(postRequest);
  			final int statusCode = getResponse.getStatusLine().getStatusCode();
 
