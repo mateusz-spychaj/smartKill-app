@@ -46,6 +46,7 @@ public class MapsActivity extends MapActivity {
 	SKApplication app;
 
 	HashMap<Number, Integer> killChecker;
+	HashMap<Number,Profile> profiles;
 	boolean sent=true;
 	boolean profilesFetched=false;
 	private MapView mapView;
@@ -145,8 +146,7 @@ public class MapsActivity extends MapActivity {
 				new Positions());
 		if(!profilesFetched&&m.getPositions()!=null){
 			for(Position p:m.getPositions()){
-				Log.e("wchodze do petli","tak");
-				p.setProfile(getUser(p.getUser()));
+				profiles.put(p.getUser(),getUserProfile(p.getUser()));
 			}
 			profilesFetched=true;
 		}
@@ -264,7 +264,7 @@ public class MapsActivity extends MapActivity {
 		}
 	}
 
-	public Profile getUser(Number id){
+	public Profile getUserProfile(Number id){
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("id", app.getSessionId());
 		params.put("user", id+"");

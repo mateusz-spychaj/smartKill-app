@@ -13,14 +13,6 @@ public class Position{
    	private String type;
    	private String updated_at;
    	private Number user;
-   	private Profile profile;
-   	
-   	public Profile getProfile() {
-		return profile;
-	}
-   	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
 
  	public boolean getDisqualification(){
 		return this.disqualification;
