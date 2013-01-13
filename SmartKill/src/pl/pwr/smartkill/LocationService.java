@@ -34,11 +34,6 @@ public class LocationService extends Service{
 	public static final int MODE_CUSTOM=3;
 	public static final int MODE_NONE=4;
 	
-	public LocationService(MapsActivity map){
-		super();
-		this.map = map;
-	}
-	
 	private class LocationListener implements android.location.LocationListener{
 		Location mLastLocation;
 		public LocationListener(String provider)

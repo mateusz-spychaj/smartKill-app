@@ -6,30 +6,24 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import pl.pwr.smartkill.LocationService;
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.SKApplication;
-import pl.pwr.smartkill.obj.LoginData;
 import pl.pwr.smartkill.obj.Match;
-import pl.pwr.smartkill.obj.Matches;
 import pl.pwr.smartkill.obj.Position;
 import pl.pwr.smartkill.obj.Positions;
-import pl.pwr.smartkill.tools.CircleOverlay;
+import pl.pwr.smartkill.obj.Profile;
 import pl.pwr.smartkill.tools.DistanceCalculator;
 import pl.pwr.smartkill.tools.FixedMyLocationOverlay;
-import pl.pwr.smartkill.LocationService;
-import pl.pwr.smartkill.tools.MyLocationListener;
 import pl.pwr.smartkill.tools.PlayersItemizedOverlay;
 import pl.pwr.smartkill.tools.WebserviceHandler;
-import pl.pwr.smartkill.tools.httpRequests.HttpRequest;
 import pl.pwr.smartkill.tools.httpRequests.PostRequest;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.androidquery.AQuery;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -51,6 +45,9 @@ public class MapsActivity extends MapActivity {
 	@App
 	SKApplication app;
 
+	HashMap<Number, Integer> killChecker;
+	boolean sent=true;
+	boolean profilesFetched=false;
 	private MapView mapView;
 	private MapController mc;
 	private MyLocationOverlay myLocationOverlay;
@@ -78,7 +75,9 @@ public class MapsActivity extends MapActivity {
 		// call convenience method that zooms map on our location
 		// zoomToMyLocation();
 		//locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locService = new LocationService(this);
+
+		//		locService = new LocationService(this);//TOOD wyłączone , to fix, android annotations dokumentacja sie kłania
+
 		//locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 2, locListener);
 
 		// mapView.getOverlays().add(new CircleOverlay(this,
@@ -108,7 +107,9 @@ public class MapsActivity extends MapActivity {
 		timer = new Timer("TaskName");
 		TimerTask task = new TimerTask() {
 			public void run() {
-				getData();
+				if(sent){
+					getData();
+				}
 				mc.animateTo(myLocationOverlay.getMyLocation());
 			}
 		};
@@ -122,6 +123,7 @@ public class MapsActivity extends MapActivity {
 
 	@Background
 	public void getData() {
+		sent=false;
 		String lat, lng;
 		if (myLocationOverlay != null
 				&& myLocationOverlay.getMyLocation() != null) {
@@ -138,15 +140,23 @@ public class MapsActivity extends MapActivity {
 		params.put("match", match.getId() + "");
 		params.put("lat", lat);
 		params.put("lng", lng);
-		//Log.e("params", ((float) myLocationOverlay.getMyLocation().getLongitudeE6()) / 1000000 + "");
 		Positions m = new WebserviceHandler<Positions>().getAndParse(this,
 				new PostRequest(SKApplication.API_URL + "position", params),
 				new Positions());
-		updateData(m);
+		if(!profilesFetched&&m.getPositions()!=null){
+			for(Position p:m.getPositions()){
+				Log.e("wchodze do petli","tak");
+				p.setProfile(getUser(p.getUser()));
+			}
+			profilesFetched=true;
+		}
+		if(m.getPositions()!=null)
+			updateData(m);
 	}
 
 	@UiThread
 	public void updateData(Positions m) {
+		sent=true;
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable victim = getResources().getDrawable(R.drawable.victim);
 		Drawable hunter = getResources().getDrawable(
@@ -161,7 +171,7 @@ public class MapsActivity extends MapActivity {
 			if (p.getLat() != null) {
 				GeoPoint point = new GeoPoint((int) (Float.parseFloat(p
 						.getLat()) * 1000000), (int) (Float.parseFloat(p
-						.getLng()) * 1000000));
+								.getLng()) * 1000000));
 				PlayersItemizedOverlay itemizedoverlay;
 				if (p.getType().equals("hunter")) {
 					itemizedoverlay = new PlayersItemizedOverlay(hunter, this,
@@ -171,21 +181,30 @@ public class MapsActivity extends MapActivity {
 						if (dc.CalculationByDistance(point,
 								myLocationOverlay.getMyLocation()) < 5) {
 							// kill
-							HashMap<String, String> params = new HashMap<String, String>();
-							params.put("id", app.getSessionId());
-							params.put("match", match.getId() + "");
-							params.put("hunter", p.getUser() + "");
-							lat = ((float) (myLocationOverlay.getMyLocation()
-									.getLatitudeE6())) / 1000000 + "";
-							lng = ((float) myLocationOverlay.getMyLocation()
-									.getLongitudeE6()) / 1000000 + "";
-							params.put("lat", lat);
-							params.put("lng", lng);
-							KillData killed = new WebserviceHandler<KillData>()
-									.getAndParse(this, new PostRequest(
-											SKApplication.API_URL + "killUser",
-											params), new KillData());
-							Log.e("killed", killed + "");
+							if(killChecker.containsKey(p.getUser())&&killChecker.get(p.getUser())>2){
+								HashMap<String, String> params = new HashMap<String, String>();
+								params.put("id", app.getSessionId());
+								params.put("match", match.getId() + "");
+								params.put("hunter", p.getUser() + "");
+								lat = ((float) (myLocationOverlay.getMyLocation()
+										.getLatitudeE6())) / 1000000 + "";
+								lng = ((float) myLocationOverlay.getMyLocation()
+										.getLongitudeE6()) / 1000000 + "";
+								params.put("lat", lat);
+								params.put("lng", lng);
+								KillData killed = new WebserviceHandler<KillData>()
+										.getAndParse(this, new PostRequest(
+												SKApplication.API_URL + "killUser",
+												params), new KillData());
+								Log.e("killed", killed + "");
+
+							}else{
+								if(!killChecker.containsKey(p.getUser())){
+									killChecker.put(p.getUser(), 1);
+								}else{
+									killChecker.put(p.getUser(), killChecker.get(p.getUser())+1);
+								}
+							}
 
 						}
 
@@ -243,5 +262,20 @@ public class MapsActivity extends MapActivity {
 		public void setMatchId(String matchId) {
 			this.matchId = matchId;
 		}
+	}
+
+	public Profile getUser(Number id){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("id", app.getSessionId());
+		params.put("user", id+"");
+		Profile m = new WebserviceHandler<Profile>().getAndParse(this,
+				new PostRequest(SKApplication.API_URL + "profile", params),
+				new Profile());
+		return m;
+	}
+//TODO
+	public void downloadAvatar(String url){
+		AQuery aq = new AQuery(getParent());
+//		aq.id(R.id.image1).image(url);//TODO gdzie R.id.image1 to ID obrazka który ma byc ustawiony, zamiast tego obiekt ImageView można dać
 	}
 }

@@ -47,6 +47,7 @@ public class MainActivity extends SherlockFragmentActivity {
 //		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		setContentView(R.layout.main);
+		getSupportActionBar().setSubtitle(app.getMyProfile().getUsername());
 		overridePendingTransition(R.anim.shift_in, R.anim.shift_out);
 
 		ourInstance=this;

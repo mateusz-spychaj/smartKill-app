@@ -1,6 +1,7 @@
 package pl.pwr.smartkill;
 
 import pl.pwr.smartkill.db.UserHelper;
+import pl.pwr.smartkill.obj.User;
 
 import com.googlecode.androidannotations.annotations.EApplication;
 
@@ -15,7 +16,14 @@ public class SKApplication extends Application{
 	private String sessionId;
 	private boolean online;
 	private UserHelper uh;
+	private User myProfile;
 	
+	public User getMyProfile() {
+		return myProfile;
+	}
+	public void setMyProfile(User myProfile) {
+		this.myProfile = myProfile;
+	}
 	
 	@Override
 	public void onCreate() {

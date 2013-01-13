@@ -14,11 +14,6 @@ public final class LocationService_
 {
 
 
-    public LocationService_(MapsActivity map) {
-		super(map);
-		// TODO Auto-generated constructor stub
-	}
-
 	private void init_() {
     }
 

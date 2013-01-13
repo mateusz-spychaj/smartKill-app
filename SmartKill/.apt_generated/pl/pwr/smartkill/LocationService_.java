@@ -5,20 +5,13 @@
 
 package pl.pwr.smartkill;
 
-import pl.pwr.smartkill.activities.MapsActivity;
-
 
 public final class LocationService_
     extends LocationService
 {
 
 
-    public LocationService_(MapsActivity map) {
-		super(map);
-		// TODO Auto-generated constructor stub
-	}
-
-	private void init_() {
+    private void init_() {
     }
 
     @Override

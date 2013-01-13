@@ -4,12 +4,11 @@ import java.util.HashMap;
 
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.SKApplication;
-import pl.pwr.smartkill.obj.LoginData;
+import pl.pwr.smartkill.obj.Login;
 import pl.pwr.smartkill.tools.PreferencesHelper_;
 import pl.pwr.smartkill.tools.WebserviceHandler;
 import pl.pwr.smartkill.tools.httpRequests.HttpRequest;
 import pl.pwr.smartkill.tools.httpRequests.PostRequest;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -94,11 +93,12 @@ public class LoginActivity extends SherlockActivity {
 		HashMap<String, String> creditentials = new HashMap<String, String>();
 		creditentials.put(HttpRequest.LOGIN, login);
 		creditentials.put(HttpRequest.PASSWORD, password);
-		LoginData response = new WebserviceHandler<LoginData>().getAndParse(
+		Login response = new WebserviceHandler<Login>().getAndParse(
 				this, new PostRequest(SKApplication.API_URL + "login",
-						creditentials), new LoginData());
+						creditentials), new Login());
 		if (response.getStatus().contains("success")) {
 			app.setSessionId(response.getId());
+			app.setMyProfile(response.getUser());
 			loginFinished(true);
 		} else {
 			loginFinished(false);
