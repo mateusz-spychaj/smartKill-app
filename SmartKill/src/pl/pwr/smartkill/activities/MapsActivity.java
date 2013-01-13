@@ -52,8 +52,6 @@ public class MapsActivity extends MapActivity {
 	private MapView mapView;
 	private MapController mc;
 	private MyLocationOverlay myLocationOverlay;
-	public LocationManager locManager;
-	public LocationService locService;
 	public static final double PRECISION = 1000000;
 
 	/** Called when the activity is first created. */
@@ -63,6 +61,8 @@ public class MapsActivity extends MapActivity {
 		setContentView(R.layout.activity_maps);
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
+		profiles=new HashMap<Number, Profile>();
+		killChecker=new HashMap<Number, Integer>();
 
 		// create an overlay that shows our current location
 		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
@@ -72,18 +72,6 @@ public class MapsActivity extends MapActivity {
 		mapView.postInvalidate();
 		mc = mapView.getController();
 		mc.setZoom(15);
-
-		// call convenience method that zooms map on our location
-		// zoomToMyLocation();
-		//locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		//		locService = new LocationService(this);//TOOD wyłączone , to fix, android annotations dokumentacja sie kłania
-
-		//locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 2, locListener);
-
-		// mapView.getOverlays().add(new CircleOverlay(this,
-		// StrToDbl(match.getLat())/PRECISION,
-		// (StrToDbl(match.getLat())/PRECISION), 300));
 
 		myLocationOverlay.runOnFirstFix(new Runnable() {
 			public void run() {
@@ -100,7 +88,7 @@ public class MapsActivity extends MapActivity {
 		return (Double.parseDouble(data));
 	}
 
-	long delay = 4 * 1000; // delay in ms : 10 * 1000 ms = 10 sec.
+	long delay = 4 * 1000; // delay in ms : 4 * 1000 ms = 4 sec.
 	Timer timer = new Timer("TaskName");
 
 	public void start() {
@@ -111,7 +99,8 @@ public class MapsActivity extends MapActivity {
 				if(sent){
 					getData();
 				}
-				mc.animateTo(myLocationOverlay.getMyLocation());
+				if (myLocationOverlay != null && myLocationOverlay.getMyLocation() != null)
+					mc.animateTo(myLocationOverlay.getMyLocation());
 			}
 		};
 		Date executionDate = new Date();
@@ -146,7 +135,9 @@ public class MapsActivity extends MapActivity {
 				new Positions());
 		if(!profilesFetched&&m.getPositions()!=null){
 			for(Position p:m.getPositions()){
-				profiles.put(p.getUser(),getUserProfile(p.getUser()));
+				Profile prof = getUserProfile(p.getUser());
+				if(prof!=null)
+					profiles.put(p.getUser(),prof);
 			}
 			profilesFetched=true;
 		}
@@ -162,26 +153,33 @@ public class MapsActivity extends MapActivity {
 		Drawable hunter = getResources().getDrawable(
 				R.drawable.ic_launcher_icon);
 		myLocationOverlay = (FixedMyLocationOverlay) mapOverlays.get(0);
-		mapOverlays.clear();
-		mapOverlays.add(myLocationOverlay);
+		//mapOverlays.clear();
+		//mapOverlays.add(myLocationOverlay);
 		DistanceCalculator dc = new DistanceCalculator();
 		String myType = "prey"; // TODO pobranie typu użytkownika
+		if (app.getMyProfile().getUsername() == "minchal")
+			myType = "hunter";
 		String lat, lng;
+		int i = 1;
 		for (Position p : m.getPositions()) {
-			if (p.getLat() != null) {
+			Profile prof = profiles.get(p.getUser()); 
+			if (p.getLat() != null && prof != null) {
 				GeoPoint point = new GeoPoint((int) (Float.parseFloat(p
 						.getLat()) * 1000000), (int) (Float.parseFloat(p
 								.getLng()) * 1000000));
 				PlayersItemizedOverlay itemizedoverlay;
+				Log.e("position", dc.CalculationByDistance(point,myLocationOverlay.getMyLocation())+"");
 				if (p.getType().equals("hunter")) {
-					itemizedoverlay = new PlayersItemizedOverlay(hunter, this,
-							point, p.getType());// TODO - p.getType() - powinno
+					itemizedoverlay = new PlayersItemizedOverlay(hunter, this, point, prof.getUsername());// TODO - p.getType() - powinno
 					// byc getName()
+					Log.e("number", killChecker.get(p.getUser())+"");
 					if (myType.equals("prey")) {
 						if (dc.CalculationByDistance(point,
-								myLocationOverlay.getMyLocation()) < 5) {
+								myLocationOverlay.getMyLocation()) < 0.5) {
 							// kill
-							if(killChecker.containsKey(p.getUser())&&killChecker.get(p.getUser())>2){
+							
+							if(killChecker.containsKey(p.getUser()))
+								if (killChecker.get(p.getUser())>5){
 								HashMap<String, String> params = new HashMap<String, String>();
 								params.put("id", app.getSessionId());
 								params.put("match", match.getId() + "");
@@ -210,9 +208,11 @@ public class MapsActivity extends MapActivity {
 
 					}
 				} else
-					itemizedoverlay = new PlayersItemizedOverlay(victim, this,
-							point, p.getType());
+					itemizedoverlay = new PlayersItemizedOverlay(victim, this,point, prof.getUsername());
+				if (mapOverlays.size() > 1 && mapOverlays.size() > i)
+					mapOverlays.remove(i);
 				mapOverlays.add(itemizedoverlay);
+				i++;
 
 				Log.e("type", "Position: " + p.getType());
 			}
