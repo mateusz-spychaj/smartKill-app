@@ -24,15 +24,15 @@ import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
 @EFragment
-public class ListFragment extends Fragment implements OnItemClickListener{
+public class AllListFragment extends Fragment implements OnItemClickListener{
 	ArrayList<Match> items;
 	boolean loading=false;
 	
 
 	
 	ListView list;
-    static ListFragment newInstance(int num) {
-        ListFragment f = new ListFragment();
+    static AllListFragment newInstance(int num) {
+        AllListFragment f = new AllListFragment();
         return f;
     }
     
@@ -56,7 +56,7 @@ public class ListFragment extends Fragment implements OnItemClickListener{
 	public void getMatches(){
 		HashMap<String , String> params = new HashMap<String, String>();
 		params.put("id", ((SKApplication)getActivity().getApplication()).getSessionId());
-		Matches m = new WebserviceHandler<Matches>().getAndParse(getActivity(), new PostRequest(SKApplication.API_URL+"userGames", params), new Matches());
+		Matches m = new WebserviceHandler<Matches>().getAndParse(getActivity(), new PostRequest(SKApplication.API_URL+"matches", params), new Matches());
 		updateList(m);
 	}
 	

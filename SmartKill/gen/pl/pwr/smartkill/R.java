@@ -849,11 +849,16 @@ containing a value of this type.
         public static final int login_remember=0x7f050029;
         public static final int main_list=0x7f05002c;
         public static final int mapview=0x7f05002b;
-        public static final int menu_settings=0x7f050037;
+        public static final int menu_settings=0x7f05003c;
         public static final int normal=0x7f050001;
         public static final int pager=0x7f050034;
-        public static final int pullist_pb=0x7f050035;
-        public static final int pulllist=0x7f050036;
+        public static final int profile_death_count=0x7f050037;
+        public static final int profile_games_killer=0x7f050038;
+        public static final int profile_games_prey=0x7f050039;
+        public static final int profile_kill_count=0x7f050036;
+        public static final int profile_login=0x7f050035;
+        public static final int pullist_pb=0x7f05003a;
+        public static final int pulllist=0x7f05003b;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
@@ -892,9 +897,10 @@ containing a value of this type.
         public static final int list_games=0x7f030017;
         public static final int load_more_footer=0x7f030018;
         public static final int main=0x7f030019;
-        public static final int pulllist=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
+        public static final int profile=0x7f03001a;
+        public static final int pulllist=0x7f03001b;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001c;
+        public static final int sherlock_spinner_item=0x7f03001d;
     }
     public static final class menu {
         public static final int activity_main=0x7f0c0000;

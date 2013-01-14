@@ -44,7 +44,7 @@ public class WebserviceHandler<T extends Object> {
 			//TODO handling error if got response with error
 		}else{
 			try {
-				ret = (T) gson.fromJson(readed, model.getClass());
+				ret = (T) gson.fromJson(readed.replace("games", "matches"), model.getClass());
 				Log.i(TAG, "successfully parsed on 1st try");
 			} catch (JsonParseException e) {
 				Log.e(TAG, "parsing failed: ", e);

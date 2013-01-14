@@ -1,8 +1,6 @@
 
 package pl.pwr.smartkill.obj;
 
-import java.util.List;
-
 public class User{
    	private boolean admin;
    	private String email;

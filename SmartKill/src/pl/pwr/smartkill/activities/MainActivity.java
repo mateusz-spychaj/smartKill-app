@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.fragments.AllListFragment_;
 import pl.pwr.smartkill.fragments.ListFragment_;
+import pl.pwr.smartkill.fragments.ProfileListFragment_;
 import pl.pwr.smartkill.tools.WebserviceHandler;
 import pl.pwr.smartkill.tools.httpRequests.PostRequest;
 import android.content.Context;
@@ -52,15 +54,15 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		ourInstance=this;
 
-//		ActionBar.Tab tab1 = getSupportActionBar().newTab().setText("Wszystkie");
+		ActionBar.Tab tab1 = getSupportActionBar().newTab().setText("Wszystkie");
 		ActionBar.Tab tab2 = getSupportActionBar().newTab().setText("Zapisany");
-//		ActionBar.Tab tab3 = getSupportActionBar().newTab().setText("Profil");
+		ActionBar.Tab tab3 = getSupportActionBar().newTab().setText("Profil");
 		
 		mViewPager = (ViewPager)findViewById(R.id.pager);
 		mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
-//		mTabsAdapter.addTab(tab1, EmptyListFragment_.class);
+		mTabsAdapter.addTab(tab1, AllListFragment_.class);
 		mTabsAdapter.addTab(tab2, ListFragment_.class);
-//		mTabsAdapter.addTab(tab3, EmptyListFragment_.class);
+		mTabsAdapter.addTab(tab3, ProfileListFragment_.class);
 		mViewPager.setCurrentItem(0);
 
 	}

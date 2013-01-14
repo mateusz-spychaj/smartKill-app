@@ -6,6 +6,7 @@ import java.util.List;
 public class Positions{
    	private List<Position> positions;
    	private String status;
+   	private User user;
 
  	public List<Position> getPositions(){
 		return this.positions;
@@ -18,5 +19,11 @@ public class Positions{
 	}
 	public void setStatus(String status){
 		this.status = status;
+	}
+ 	public User getUser(){
+		return this.user;
+	}
+	public void setUser(User user){
+		this.user = user;
 	}
 }
