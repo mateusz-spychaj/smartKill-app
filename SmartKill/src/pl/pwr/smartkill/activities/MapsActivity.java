@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.google.android.maps.GeoPoint;
@@ -53,6 +54,7 @@ public class MapsActivity extends MapActivity {
 	private MapController mc;
 	private MyLocationOverlay myLocationOverlay;
 	public static final double PRECISION = 1000000;
+	private boolean alive = true;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -92,8 +94,6 @@ public class MapsActivity extends MapActivity {
 	Timer timer = new Timer("TaskName");
 
 	public void start() {
-		timer.cancel();
-		timer = new Timer("TaskName");
 		TimerTask task = new TimerTask() {
 			public void run() {
 				if (sent) {
@@ -146,31 +146,29 @@ public class MapsActivity extends MapActivity {
 			updateData(m);
 	}
 
-	@UiThread
+	@Background
 	public void updateData(Positions m) {
 		sent = true;
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable victim = getResources().getDrawable(R.drawable.victim);
 		Drawable hunter = getResources().getDrawable(
 				R.drawable.ic_launcher_icon);
+		Drawable dead = getResources().getDrawable(R.drawable.dead);
 		myLocationOverlay = (FixedMyLocationOverlay) mapOverlays.get(0);
 		// mapOverlays.clear();
 		// mapOverlays.add(myLocationOverlay);
 		DistanceCalculator dc = new DistanceCalculator();
-		String myType = "prey"; // TODO pobranie typu użytkownika
-		if (app.getMyProfile().getUsername() == "minchal")
-			myType = "hunter";
 		String lat, lng;
 		int i = 1;
 		for (Position p : m.getPositions()) {
+			Log.e("type", p.isActive() + " type");
+			String myType = m.getUser().getType();
+			if (alive && !m.getUser().getIs_active()) {
+				alive = false;
+
+			}
 			Profile prof = profiles.get(p.getUser());
-			/*
-			 * for(Number n:profiles.keySet()){
-			 * Log.e("n "+n,(profiles.get(n)!=null
-			 * )+"tak "+p.getUser().intValue() + " !=! " + n.intValue()); if
-			 * (n.intValue() == p.getUser().intValue()) prof = profiles.get(n);
-			 * }
-			 */
+
 			if (prof == null)
 				Log.e("profile", p.getUser() + " " + profiles.get(0));
 			if (p.getLat() != null && prof != null) {
@@ -178,13 +176,9 @@ public class MapsActivity extends MapActivity {
 						.getLat()) * 1000000), (int) (Float.parseFloat(p
 						.getLng()) * 1000000));
 				PlayersItemizedOverlay itemizedoverlay;
-				Log.e("position",
-						dc.CalculationByDistance(point,
-								myLocationOverlay.getMyLocation())
-								+ "");
 				if (p.getType().equals("hunter")) {
 					itemizedoverlay = new PlayersItemizedOverlay(hunter, this,
-							point, prof.getUsername());
+							point, prof.getUsername(), getString(R.string.hunter));
 					if (myType.equals("prey")) {
 						if (dc.CalculationByDistance(point,
 								myLocationOverlay.getMyLocation()) < 0.5) {
@@ -212,9 +206,14 @@ public class MapsActivity extends MapActivity {
 								params.put("lng", lng);
 								KillData killed = new WebserviceHandler<KillData>()
 										.getAndParse(this, new PostRequest(
-												SKApplication.API_URL+ "killUser", params),
+												SKApplication.API_URL
+														+ "killUser", params),
 												new KillData());
 								Log.e("killed", p.getUser() + "");
+								this.showKilled(m.getUser().getUsername(), true);
+								this.changeOverlay(m.getUser().getUsername());
+								timer.cancel();
+								getData();
 
 							} else {
 								if (!killChecker.containsKey(p.getUser())) {
@@ -224,14 +223,15 @@ public class MapsActivity extends MapActivity {
 											killChecker.get(p.getUser()) + 1);
 								}
 							}
-
 						}
-
 					}
 				} else {
-					itemizedoverlay = new PlayersItemizedOverlay(victim, this,
-							point, prof.getUsername());
-					Log.e("type", p.getType() + " type");
+					if (p.isActive())
+						itemizedoverlay = new PlayersItemizedOverlay(victim,
+								this, point, prof.getUsername(), getString(R.string.victim));
+					else
+						itemizedoverlay = new PlayersItemizedOverlay(dead,
+								this, point, prof.getUsername(), getString(R.string.victim));
 				}
 				if (mapOverlays.size() > 1 && mapOverlays.size() > i)
 					mapOverlays.remove(i);
@@ -240,7 +240,6 @@ public class MapsActivity extends MapActivity {
 			} else
 				Log.e("nullowo", "profile albo miejsce");
 		}
-		// TODO
 	}
 
 	@Override
@@ -264,6 +263,23 @@ public class MapsActivity extends MapActivity {
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
+	}
+
+	@UiThread
+	public void changeOverlay(String name){
+		PlayersItemizedOverlay mine =  new PlayersItemizedOverlay(getResources().getDrawable(R.drawable.dead),
+				this, myLocationOverlay.getMyLocation(), name, getString(R.string.victim));
+		mapView.getOverlays().remove(0);
+		mapView.getOverlays().add(0, mine);
+	}
+	
+	@UiThread
+	public void showKilled(String name, boolean own) {
+		if (own)
+			Toast.makeText(app, name + " zostałeś zabity!", Toast.LENGTH_LONG)
+					.show();
+		else
+			Toast.makeText(app, "Zabiłeś " + name, Toast.LENGTH_LONG).show();
 	}
 
 	public class KillData {

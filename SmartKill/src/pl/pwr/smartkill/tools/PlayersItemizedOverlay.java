@@ -33,11 +33,11 @@ public class PlayersItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		return mOverlays.size();
 	}
 
-	public PlayersItemizedOverlay(Drawable defaultMarker, Context context, GeoPoint point, String name) {
+	public PlayersItemizedOverlay(Drawable defaultMarker, Context context, GeoPoint point, String name, String type) {
 
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
-		OverlayItem overlayitem = new OverlayItem(point, context.getString(R.string.victim), name);
+		OverlayItem overlayitem = new OverlayItem(point, type, name);
 		this.addOverlay(overlayitem);
 	}
 

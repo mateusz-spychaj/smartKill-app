@@ -796,13 +796,14 @@ containing a value of this type.
         public static final int abs__tab_selected_pressed_holo=0x7f020053;
         public static final int abs__tab_unselected_pressed_holo=0x7f020054;
         public static final int costum_progress_bar=0x7f020055;
-        public static final int ic_action_search=0x7f020056;
-        public static final int ic_launcher=0x7f020057;
-        public static final int ic_launcher_icon=0x7f020058;
-        public static final int ic_pulltorefresh_arrow=0x7f020059;
-        public static final int logout=0x7f02005a;
-        public static final int refresh=0x7f02005b;
-        public static final int victim=0x7f02005c;
+        public static final int dead=0x7f020056;
+        public static final int ic_action_search=0x7f020057;
+        public static final int ic_launcher=0x7f020058;
+        public static final int ic_launcher_icon=0x7f020059;
+        public static final int ic_pulltorefresh_arrow=0x7f02005a;
+        public static final int logout=0x7f02005b;
+        public static final int refresh=0x7f02005c;
+        public static final int victim=0x7f02005d;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050022;
@@ -938,6 +939,7 @@ containing a value of this type.
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0009;
         public static final int app_name=0x7f0a000a;
         public static final int game=0x7f0a0016;
+        public static final int hunter=0x7f0a001e;
         public static final int incorrect_login_or_password=0x7f0a0015;
         public static final int log_in=0x7f0a0012;
         public static final int login=0x7f0a0010;

@@ -20,4 +20,5 @@
 	<string name="pull_to_refresh_release_label">Puść aby odświeżyć&#8230;</string>
 	<string name="pull_to_refresh_refreshing_label">Ładuję&#8230;</string>
 	<string name="pull_to_refresh_tap_label">Dotknij aby odświeżyć&#8230;</string>
+	<string name="hunter">łowca</string>
 </resources>

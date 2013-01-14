@@ -97,14 +97,32 @@ public final class MapsActivity_
     }
 
     @Override
-    public void updateData(final Positions m) {
+    public void changeOverlay(final String name) {
         handler_.post(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    MapsActivity_.super.updateData(m);
+                    MapsActivity_.super.changeOverlay(name);
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void showKilled(final String name, final boolean own) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.showKilled(name, own);
                 } catch (RuntimeException e) {
                     Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }
@@ -123,6 +141,24 @@ public final class MapsActivity_
             public void run() {
                 try {
                     MapsActivity_.super.getData();
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void updateData(final Positions m) {
+        BackgroundExecutor.execute(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.updateData(m);
                 } catch (RuntimeException e) {
                     Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }
