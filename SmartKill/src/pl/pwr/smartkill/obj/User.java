@@ -12,6 +12,7 @@ public class User{
    	private Number points_prey;
    	private String registered_at;
    	private String username;
+   	private String type;
 
  	public boolean getAdmin(){
 		return this.admin;
@@ -72,5 +73,12 @@ public class User{
 	}
 	public void setUsername(String username){
 		this.username = username;
+	}
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type){
+		this.type = type;
 	}
 }

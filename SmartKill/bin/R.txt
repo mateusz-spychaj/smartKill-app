@@ -309,6 +309,7 @@ int layout pulllist 0x7f03001b
 int layout sherlock_spinner_dropdown_item 0x7f03001c
 int layout sherlock_spinner_item 0x7f03001d
 int menu activity_main 0x7f0c0000
+int string Started 0x7f0a001f
 int string abs__action_bar_home_description 0x7f0a0000
 int string abs__action_bar_up_description 0x7f0a0001
 int string abs__action_menu_overflow_description 0x7f0a0002
@@ -320,6 +321,7 @@ int string abs__share_action_provider_share_with 0x7f0a0006
 int string abs__shareactionprovider_share_with 0x7f0a0008
 int string abs__shareactionprovider_share_with_application 0x7f0a0009
 int string app_name 0x7f0a000a
+int string endOfGame 0x7f0a0020
 int string game 0x7f0a0016
 int string hunter 0x7f0a001e
 int string incorrect_login_or_password 0x7f0a0015

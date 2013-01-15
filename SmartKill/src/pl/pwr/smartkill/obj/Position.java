@@ -13,6 +13,7 @@ public class Position{
    	private String type;
    	private String updated_at;
    	private int user;
+   	private boolean is_active;
 
  	public boolean getDisqualification(){
 		return this.disqualification;
@@ -73,5 +74,12 @@ public class Position{
 	}
 	public void setUser(int user){
 		this.user = user;
+	}
+	public boolean getIs_active() {
+		return is_active;
+	}
+	
+	public void setIs_active(boolean is_active){
+		this.is_active = is_active;
 	}
 }

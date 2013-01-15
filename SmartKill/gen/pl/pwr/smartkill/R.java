@@ -909,6 +909,7 @@ containing a value of this type.
         public static final int activity_main=0x7f0c0000;
     }
     public static final class string {
+        public static final int Started=0x7f0a001f;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f0a0000;
@@ -940,6 +941,7 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0009;
         public static final int app_name=0x7f0a000a;
+        public static final int endOfGame=0x7f0a0020;
         public static final int game=0x7f0a0016;
         public static final int hunter=0x7f0a001e;
         public static final int incorrect_login_or_password=0x7f0a0015;
