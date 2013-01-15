@@ -77,6 +77,7 @@ public class FixedMyLocationOverlay extends MyLocationOverlay {
 			canvas.drawCircle(center.x, center.y, radius, accuracyPaint);
 			
 			drawable.setBounds(center.x - width/2, center.y - height/2, center.x + width/2, center.y + height/2);
+			drawable.setBounds(center.x - width/2, center.y - height, center.x + width/2, center.y);
 			drawable.draw(canvas);
 	}
 

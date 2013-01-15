@@ -2,6 +2,7 @@ package pl.pwr.smartkill.activities;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,19 +10,25 @@ import java.util.TimerTask;
 import pl.pwr.smartkill.LocationService;
 import pl.pwr.smartkill.R;
 import pl.pwr.smartkill.SKApplication;
+import pl.pwr.smartkill.obj.KillData;
 import pl.pwr.smartkill.obj.Match;
+import pl.pwr.smartkill.obj.MatchData;
 import pl.pwr.smartkill.obj.Position;
 import pl.pwr.smartkill.obj.Positions;
 import pl.pwr.smartkill.obj.Profile;
+import pl.pwr.smartkill.obj.StartData;
 import pl.pwr.smartkill.tools.DistanceCalculator;
 import pl.pwr.smartkill.tools.FixedMyLocationOverlay;
 import pl.pwr.smartkill.tools.PlayersItemizedOverlay;
 import pl.pwr.smartkill.tools.WebserviceHandler;
 import pl.pwr.smartkill.tools.httpRequests.PostRequest;
+import android.R.drawable;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -37,6 +44,7 @@ import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.UiThread;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 @EActivity
 public class MapsActivity extends MapActivity {
@@ -45,6 +53,12 @@ public class MapsActivity extends MapActivity {
 
 	@App
 	SKApplication app;
+
+	@ViewById(R.id.startButton)
+	Button startButton;
+
+	@ViewById(R.id.endButton)
+	Button endButton;
 
 	HashMap<Integer, Integer> killChecker;
 	HashMap<Integer, Profile> profiles;
@@ -55,6 +69,9 @@ public class MapsActivity extends MapActivity {
 	private MyLocationOverlay myLocationOverlay;
 	public static final double PRECISION = 1000000;
 	private boolean alive = true;
+	long delay = 4 * 1000; // delay in ms : 4 * 1000 ms = 4 sec.
+	Timer timer = new Timer("TaskName");
+	private HashSet<Integer> killed = new HashSet<Integer>();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -66,10 +83,8 @@ public class MapsActivity extends MapActivity {
 		profiles = new HashMap<Integer, Profile>();
 		killChecker = new HashMap<Integer, Integer>();
 
-		// create an overlay that shows our current location
 		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
 		myLocationOverlay.enableMyLocation();
-		// add this overlay to the MapView and refresh it
 		mapView.getOverlays().add(myLocationOverlay);
 		mapView.postInvalidate();
 		mc = mapView.getController();
@@ -84,14 +99,65 @@ public class MapsActivity extends MapActivity {
 
 		});
 
+		startButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				startGame();
+			}
+		});
+
+		endButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				endGame();
+			}
+		});
+		//match.setStatus("planed");
+		Log.e("id", app.getMyProfile().getId().equals(match.getCreated_by())
+				+ "");
+		if (app.getMyProfile().getId().intValue() != match.getCreated_by()
+				.intValue()) {
+			startButton.setVisibility(View.GONE);
+		} else {
+			startButton.setVisibility(View.VISIBLE);
+		}
+		endButton.setVisibility(View.GONE);
+		// startButton.setVisibility(View.VISIBLE);
+
+	}
+
+	@Background
+	protected void startGame() {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("id", app.getSessionId());
+		params.put("match", match.getId() + "");
+		StartData startGame = new WebserviceHandler<StartData>().getAndParse(
+				app, new PostRequest(SKApplication.API_URL + "start", params),
+				new StartData());
+		match.setStatus("goingon");
+		Log.e("startGame", match.getStatus() + "");
+		hideStart();
+	}
+
+	@UiThread
+	public void hideStart(){
+		startButton.setVisibility(View.GONE);
+		endButton.setVisibility(View.VISIBLE);
+	}
+
+	@Background
+	protected void endGame() {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("id", app.getSessionId());
+		params.put("match", match.getId() + "");
+		StartData startGame = new WebserviceHandler<StartData>().getAndParse(
+				app, new PostRequest(SKApplication.API_URL + "finish", params),
+				new StartData());
+		match.setStatus("finished");
+		Log.e("endGame", match.getStatus() + "");
 	}
 
 	public static double StrToDbl(String data) {
 		return (Double.parseDouble(data));
 	}
-
-	long delay = 4 * 1000; // delay in ms : 4 * 1000 ms = 4 sec.
-	Timer timer = new Timer("TaskName");
 
 	public void start() {
 		TimerTask task = new TimerTask() {
@@ -116,6 +182,7 @@ public class MapsActivity extends MapActivity {
 	public void getData() {
 		sent = false;
 		String lat, lng;
+		Log.e("data", "getData working");
 		if (myLocationOverlay != null
 				&& myLocationOverlay.getMyLocation() != null) {
 			lat = ((float) (myLocationOverlay.getMyLocation().getLatitudeE6()))
@@ -129,21 +196,34 @@ public class MapsActivity extends MapActivity {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("id", app.getSessionId());
 		params.put("match", match.getId() + "");
-		params.put("lat", lat);
-		params.put("lng", lng);
-		Positions m = new WebserviceHandler<Positions>().getAndParse(this,
-				new PostRequest(SKApplication.API_URL + "position", params),
-				new Positions());
-		if (!profilesFetched && m.getPositions() != null) {
-			for (Position p : m.getPositions()) {
-				Profile prof = getUserProfile(p.getUser());
-				if (prof != null)
-					profiles.put(p.getUser(), prof);
+		MatchData currentMatch = new WebserviceHandler<MatchData>()
+				.getAndParse(this, new PostRequest(
+						SKApplication.API_URL
+						+ "killUser", params),
+						new MatchData());
+
+		//		if (currentMatch.getStatus() == "goingon") {
+		if (true){
+			params = new HashMap<String, String>();
+			params.put("id", app.getSessionId());
+			params.put("match", match.getId() + "");
+			params.put("lat", lat);
+			params.put("lng", lng);
+			Positions m = new WebserviceHandler<Positions>()
+					.getAndParse(this, new PostRequest(SKApplication.API_URL
+							+ "position", params), new Positions());
+			if (!profilesFetched && m.getPositions() != null) {
+				for (Position p : m.getPositions()) {
+					Profile prof = getUserProfile(p.getUser());
+					if (prof != null)
+						profiles.put(p.getUser(), prof);
+				}
+				profilesFetched = true;
 			}
-			profilesFetched = true;
+			if (m.getPositions() != null) {
+				updateData(m);
+			}
 		}
-		if (m.getPositions() != null)
-			updateData(m);
 	}
 
 	@Background
@@ -155,39 +235,33 @@ public class MapsActivity extends MapActivity {
 				R.drawable.ic_launcher_icon);
 		Drawable dead = getResources().getDrawable(R.drawable.dead);
 		myLocationOverlay = (FixedMyLocationOverlay) mapOverlays.get(0);
-		// mapOverlays.clear();
-		// mapOverlays.add(myLocationOverlay);
 		DistanceCalculator dc = new DistanceCalculator();
 		String lat, lng;
 		int i = 1;
+		Log.e("positions", m.getPositions().size()+"");
 		for (Position p : m.getPositions()) {
-			Log.e("type", p.isActive() + " type");
-			String myType = m.getUser().getType();
+			//			String myType = m.getUser().getType();
+			String myType = "prey";
 			if (alive && !m.getUser().getIs_active()) {
 				alive = false;
-
 			}
-			Profile prof = profiles.get(p.getUser());
-
-			if (prof == null)
+			Profile profile = profiles.get(p.getUser());
+			if (profile == null)
 				Log.e("profile", p.getUser() + " " + profiles.get(0));
-			if (p.getLat() != null && prof != null) {
+			if (p.getLat() != null && profile != null) {
 				GeoPoint point = new GeoPoint((int) (Float.parseFloat(p
 						.getLat()) * 1000000), (int) (Float.parseFloat(p
-						.getLng()) * 1000000));
+								.getLng()) * 1000000));
 				PlayersItemizedOverlay itemizedoverlay;
 				if (p.getType().equals("hunter")) {
 					itemizedoverlay = new PlayersItemizedOverlay(hunter, this,
-							point, prof.getUsername(), getString(R.string.hunter));
+							point, profile.getUsername(),
+							getString(R.string.hunter));
 					if (myType.equals("prey")) {
 						if (dc.CalculationByDistance(point,
 								myLocationOverlay.getMyLocation()) < 0.5) {
-							// kill
 							Log.e("number",
 									killChecker.containsKey(p.getUser()) + "");
-							if (killChecker.containsKey(p.getUser()))
-								Log.e("number", killChecker.get(p.getUser())
-										+ "");
 							if (killChecker.containsKey(p.getUser())
 									&& killChecker.get(p.getUser()) > 2) {
 								Log.e("number", killChecker.get(p.getUser())
@@ -207,11 +281,11 @@ public class MapsActivity extends MapActivity {
 								KillData killed = new WebserviceHandler<KillData>()
 										.getAndParse(this, new PostRequest(
 												SKApplication.API_URL
-														+ "killUser", params),
+												+ "killUser", params),
 												new KillData());
 								Log.e("killed", p.getUser() + "");
-								this.showKilled(m.getUser().getUsername(), true);
-								this.changeOverlay(m.getUser().getUsername());
+								showKilled(m.getUser().getUsername(), true);
+								changeOverlay(m.getUser().getUsername());
 								timer.cancel();
 								getData();
 
@@ -226,12 +300,20 @@ public class MapsActivity extends MapActivity {
 						}
 					}
 				} else {
-					if (p.isActive())
+					//if (p.getIs_active())
+					if (true)
 						itemizedoverlay = new PlayersItemizedOverlay(victim,
-								this, point, prof.getUsername(), getString(R.string.victim));
-					else
+								this, point, profile.getUsername(),
+								getString(R.string.victim));
+					else {
+						if (!killed.contains(p.getUser())) {
+							showKilled(profile.getUsername(), false);
+							killed.add(p.getUser());
+						}
 						itemizedoverlay = new PlayersItemizedOverlay(dead,
-								this, point, prof.getUsername(), getString(R.string.victim));
+								this, point, profile.getUsername(),
+								getString(R.string.victim));
+					}
 				}
 				if (mapOverlays.size() > 1 && mapOverlays.size() > i)
 					mapOverlays.remove(i);
@@ -266,41 +348,23 @@ public class MapsActivity extends MapActivity {
 	}
 
 	@UiThread
-	public void changeOverlay(String name){
-		PlayersItemizedOverlay mine =  new PlayersItemizedOverlay(getResources().getDrawable(R.drawable.dead),
-				this, myLocationOverlay.getMyLocation(), name, getString(R.string.victim));
+	public void changeOverlay(String name) {
+		PlayersItemizedOverlay mine = new PlayersItemizedOverlay(getResources()
+				.getDrawable(R.drawable.dead), this,
+				myLocationOverlay.getMyLocation(), name,
+				getString(R.string.victim));
 		mapView.getOverlays().remove(0);
 		mapView.getOverlays().add(0, mine);
+		mapView.postInvalidate();
 	}
-	
+
 	@UiThread
 	public void showKilled(String name, boolean own) {
 		if (own)
 			Toast.makeText(app, name + " zostałeś zabity!", Toast.LENGTH_LONG)
-					.show();
+			.show();
 		else
 			Toast.makeText(app, "Zabiłeś " + name, Toast.LENGTH_LONG).show();
-	}
-
-	public class KillData {
-		private Number id;
-		private Number matchId;
-
-		public Number getId() {
-			return this.id;
-		}
-
-		public void setId(Number id) {
-			this.id = id;
-		}
-
-		public Number getMatchId() {
-			return this.matchId;
-		}
-
-		public void setMatchId(Number matchId) {
-			this.matchId = matchId;
-		}
 	}
 
 	public Profile getUserProfile(Number id) {

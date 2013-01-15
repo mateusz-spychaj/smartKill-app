@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import com.googlecode.androidannotations.api.BackgroundExecutor;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
+import pl.pwr.smartkill.R.id;
 import pl.pwr.smartkill.SKApplication;
 import pl.pwr.smartkill.obj.Match;
 import pl.pwr.smartkill.obj.Positions;
@@ -38,6 +40,8 @@ public final class MapsActivity_
     }
 
     private void afterSetContentView_() {
+        endButton = ((Button) findViewById(id.endButton));
+        startButton = ((Button) findViewById(id.startButton));
         prepare();
     }
 
@@ -115,6 +119,24 @@ public final class MapsActivity_
     }
 
     @Override
+    public void hideStart() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.hideStart();
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
     public void showKilled(final String name, final boolean own) {
         handler_.post(new Runnable() {
 
@@ -123,6 +145,24 @@ public final class MapsActivity_
             public void run() {
                 try {
                     MapsActivity_.super.showKilled(name, own);
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void updateData(final Positions m) {
+        BackgroundExecutor.execute(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.updateData(m);
                 } catch (RuntimeException e) {
                     Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }
@@ -151,14 +191,32 @@ public final class MapsActivity_
     }
 
     @Override
-    public void updateData(final Positions m) {
+    public void startGame() {
         BackgroundExecutor.execute(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    MapsActivity_.super.updateData(m);
+                    MapsActivity_.super.startGame();
+                } catch (RuntimeException e) {
+                    Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void endGame() {
+        BackgroundExecutor.execute(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    MapsActivity_.super.endGame();
                 } catch (RuntimeException e) {
                     Log.e("MapsActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }
